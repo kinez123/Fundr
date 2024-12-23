@@ -1,0 +1,72 @@
+/* About Page Styles */
+.about-container {
+    background-color: #fff;
+    padding-bottom: 30px;
+}
+
+.about-header {
+    text-align: center;
+    margin-top: 300px;
+}
+
+.about-header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.about-header p {
+    font-size: 1.25rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.about-features {
+    margin-top: 3rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.feature {
+    margin-bottom: 2rem;
+}
+
+.feature h3 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.feature p {
+    font-size: 1.125rem;
+}
+
+.about-goals {
+    margin-top: 3rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.about-goals ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    font-size: 1.125rem;
+}
+
+.about-contact {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.about-contact h2 {
+    font-size: 2.25rem;
+    font-weight: bold;
+}
+
+.about-contact p {
+    font-size: 1.125rem;
+}
+
+.about-contact a {
+    color: #3b82f6;
+    text-decoration: underline;
+}

@@ -1,0 +1,270 @@
+/* Button styles */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight hover effect */
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .navbar .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  /* Navbar for smaller screens */
+  .navbar .menu-toggle {
+    display: none;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar .menu-toggle {
+      display: block;
+    }
+  
+    .navbar .nav-links {
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      display: none;
+      padding: 10px 0;
+    }
+  
+    .navbar .nav-links.active {
+      display: flex;
+    }
+  }
+  
+  /* Card styles */
+  .card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .card img {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .card h4 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .card p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Header container styles */
+  .headerContainer {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 0 100px 40px;
+  color: rgb(18, 17, 19);
+  text-align: left; /* Ensure the container aligns text to the left */
+}
+  
+  .headerContainer h1 {
+    font-size: 1.5em;
+    
+    padding-top: 650px;
+    margin-top: 850px;
+
+  }
+  
+  .headerContainer h2 {
+    font-size: 1.8em;
+    margin-top: 20px;
+    color: #333;
+}
+  
+  .headerContainer button {
+    background-color: #0bcdf0;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .headerContainer button:hover {
+    background-color: #1c07dd;
+    transform: scale(1.05);
+  }
+  
+  /* Banner image styling */
+  .bannerImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .headerContainer {
+      padding: 80px 20px;
+    }
+  
+    .headerContainer h1 {
+      font-size: 2em;
+    }
+  
+    .headerContainer h2 {
+      font-size: 1.5em;
+    }
+  
+    .card {
+      max-width: 100%;
+    }
+  }
+  .headerContainer p {
+    text-align:justify ;
+    padding-left: 0;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 100px;
+  }
+  
+/*fetures campaign*/
+.headerContainer {
+  text-align: left;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+.headerContainer h1 {
+  color: #333;
+}
+.headerContainer p {
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 20px;
+}
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:hover {
+  background-color: #0056b3;
+}
+/* Campaign Cards Container */
+.campaignsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+/* Individual Campaign Card */
+.campaignCard {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s;
+}
+.campaignCard:hover {
+  transform: translateY(-5px);
+}
+.campaignCard img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.campaignInfo {
+  padding: 15px;
+}
+.campaignInfo h3 {
+  margin: 10px 0;
+  color: #333;
+}
+.campaignInfo p {
+  color: #666;
+  font-size: 14px;
+}
+.campaignAmount {
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 10px;
+  font-size: 16px;
+}
+  
+

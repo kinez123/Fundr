@@ -7,8 +7,8 @@ const CampaignListing = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCampaign, setSelectedCampaign] = useState(null); // State for the selected campaign
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchCampaignsAndDonations = async () => {
@@ -16,19 +16,16 @@ const CampaignListing = () => {
       setError(null);
 
       try {
-        // Fetch campaigns
         const { data: campaignsData, error: campaignsError } = await supabase
           .from("Campaigns")
           .select("*");
         if (campaignsError) throw campaignsError;
 
-        // Fetch donations
         const { data: donationsData, error: donationsError } = await supabase
           .from("Donations")
           .select("campaign_id, amount");
         if (donationsError) throw donationsError;
 
-        // Map donations to campaigns
         const campaignsWithDonations = campaignsData.map((campaign) => {
           const campaignDonations = donationsData.filter(
             (donation) => donation.campaign_id === campaign.campaign_id
@@ -51,7 +48,6 @@ const CampaignListing = () => {
     fetchCampaignsAndDonations();
   }, []);
 
-  // Function to calculate the remaining time for a campaign
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
@@ -85,7 +81,7 @@ const CampaignListing = () => {
         Ongoing Campaigns
       </h1>
 
-      {loading && <p className="text-center text-gray-500">Loading campaigns...</p>}
+      {loading && <p className="text-center text-white">Loading campaigns...</p>}
       {error && (
         <p className="text-center text-red-500">Error loading campaigns: {error}</p>
       )}
@@ -126,6 +122,30 @@ const CampaignListing = () => {
                     Deadline: {calculateTimeLeft(campaign.end_date)}
                   </p>
                 )}
+
+                {/* Progress bar */}
+                {campaign.goal_amount > 0 && (
+                  <div className="mt-4">
+                    <p className="text-gray-800 font-semibold mb-2">
+                      Goal: USD {campaign.goal_amount || "N/A"}
+                    </p>
+                    <div className="h-2 bg-gray-300 rounded-full">
+                      <div
+                        className="h-full bg-green-600 rounded-full"
+                        style={{
+                          width: `${Math.min(
+                            (campaign.totalDonations / campaign.goal_amount) * 100,
+                            100
+                          )}%`,
+                        }}
+                      ></div>
+                    </div>
+                    <p className="text-gray-800 font-semibold mt-2">
+                      Raised: USD {campaign.totalDonations || 0}
+                    </p>
+                  </div>
+                )}
+
                 <button
                   onClick={() => openModal(campaign)}
                   className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 mt-4"

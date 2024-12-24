@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../../supabaseClient/supabase';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const LoginSignup = () => {
   const [action, setAction] = useState('Login');
@@ -13,7 +13,6 @@ export const LoginSignup = () => {
   const [resetError, setResetError] = useState('');
   const [isResettingPassword, setIsResettingPassword] = useState(false);
 
-  // Handle authentication state changes
   useEffect(() => {
     const fetchSession = async () => {
       const { data: sessionData } = await supabase.auth.getSession();
@@ -22,13 +21,12 @@ export const LoginSignup = () => {
 
     fetchSession();
 
-    // Subscribe to auth state changes (login/logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
 
     return () => {
-      subscription.unsubscribe(); 
+      subscription.unsubscribe();
     };
   }, []);
 
@@ -38,25 +36,25 @@ export const LoginSignup = () => {
         email: formData.email,
         password: formData.password,
       });
-  
+
       if (error) throw error;
-  
+
       const user = data.user;
-  
+
       const { data: userRole, error: roleError } = await supabase
         .from('Users')
         .select('role')
         .eq('user_id', user.id)
         .single();
-  
+
       if (roleError) throw roleError;
-  
+
       localStorage.setItem('user', JSON.stringify({ ...user, role: userRole.role }));
-  
+
       alert('Login successful!');
-      navigate('/Home'); 
+      navigate('/Home');
     } catch (err) {
-      setError(err.message); 
+      setError(err.message);
       console.error("Login error:", err);
     }
   };
@@ -71,25 +69,22 @@ export const LoginSignup = () => {
       const { error } = await supabase.auth.resetPasswordForEmail(resetEmail);
       if (error) throw error;
       alert('Password reset email sent! Please check your inbox.');
-      setIsResettingPassword(false); // Close reset password modal
+      setIsResettingPassword(false);
     } catch (err) {
       setResetError(err.message);
     }
   };
 
-  // Handle form data change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle reset email input change
   const handleResetEmailChange = (e) => {
     setResetEmail(e.target.value);
     setResetError('');
   };
 
-  // Handle button click for switching between Login and Sign Up
   const handleButtonClick = (newAction) => {
     setAction(newAction);
   };
@@ -105,12 +100,21 @@ export const LoginSignup = () => {
           <h1 className="text-3xl font-semibold text-gray-700">{action === 'Login' ? 'Login' : 'Sign Up'}</h1>
         </div>
 
-        <p className="text-center text-sm text-gray-500 mb-4">or</p>
+        <p className="text-center text-sm text-gray-500 mb-4">or login with</p>
 
-        {/* Login form fields */}
+        {/* Social Media Buttons */}
+        <div className="flex justify-center gap-4 mb-6">
+          <button className="w-12 h-12 bg-blue-600 text-white rounded-full flex justify-center items-center hover:bg-blue-700">
+            <i className="fab fa-facebook-f"></i>
+          </button>
+          <button className="w-12 h-12 bg-red-500 text-white rounded-full flex justify-center items-center hover:bg-red-600">
+            <i className="fab fa-google"></i>
+          </button>
+        </div>
+
         {action === 'Login' && (
           <div className="space-y-4">
-            <h1 className='text-2xl font-semibold text-gray-700 text-center'>Login using Email</h1>
+            <h1 className="text-2xl font-semibold text-gray-700 text-center">Login using Email</h1>
             <input
               type="email"
               name="email"
@@ -131,7 +135,6 @@ export const LoginSignup = () => {
           </div>
         )}
 
-        {/* Sign Up form fields */}
         {action === 'Sign Up' && (
           <div className="space-y-4">
             {/* Add your Sign Up form fields here */}
@@ -141,7 +144,7 @@ export const LoginSignup = () => {
         {action === 'Login' && (
           <div
             className="text-center text-sm text-blue-500 mt-2 cursor-pointer"
-            onClick={() => setIsResettingPassword(true)} // Trigger password reset modal
+            onClick={() => setIsResettingPassword(true)}
           >
             Forgot Password? <span className="font-semibold">Click Here!</span>
           </div>
@@ -152,7 +155,7 @@ export const LoginSignup = () => {
             className={`w-full py-4 px-4 m-2 rounded-lg text-white ${
               action === 'Login' ? 'bg-gray-400' : 'bg-purple-500 hover:bg-blue-600'
             }`}
-            onClick={() => navigate('/signup')} // Navigate to /signup
+            onClick={() => navigate('/signup')}
           >
             Sign Up
           </button>
@@ -166,7 +169,6 @@ export const LoginSignup = () => {
           </button>
         </div>
 
-        {/* Trigger login if Login action is selected */}
         {action === 'Login' && (
           <div className="mt-6">
             <button
@@ -179,7 +181,6 @@ export const LoginSignup = () => {
         )}
       </div>
 
-      {/* Modal for resetting password */}
       {isResettingPassword && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">

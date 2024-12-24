@@ -59,7 +59,7 @@ function DonationForm() {
 
     };
 
-    async function insertDonation({ campaignId, donorId, amount, paymentMethod, paymentStatus }) {
+    async function insertDonation({ campaignId, donorId, amount, paymentMethod, paymentStatus, receiptReference }) {
         try {
             const { data, error } = await supabase
                 .from('Donations')
@@ -69,6 +69,7 @@ function DonationForm() {
                     amount: parseFloat(amount),
                     payment_method: paymentMethod,
                     payment_status: paymentStatus,
+                    receipt_reference: receiptReference,
                     donation_date: new Date().toISOString(),
                 });
 
@@ -98,10 +99,10 @@ function DonationForm() {
         <PayPalScriptProvider options={{ "client-id": PAYPAL_CLIENT_ID }}>
             <div className="font-sans">
                 <Navbar />
-                <div className="h-[100vh] mt-[4em] mb-10 flex flex-col items-center bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500">
+                <div className="h-[100vh] mt-[4em] mb-[10] flex flex-col items-center bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500">
                     <h1 className="mb-8 mt-[1em] text-white text-3xl font-bold">Fundr Donate</h1>
                     <form
-                        className="flex flex-col p-8 w-[60em] bg-white rounded-lg shadow-lg focus-within:outline focus-within:outline-2 focus-within:outline-blue-500"
+                        className="flex flex-col p-8 mb-10 w-[60em] bg-white rounded-lg shadow-lg focus-within:outline focus-within:outline-2 focus-within:outline-blue-500"
                         onSubmit={handleSubmit}
                     >
                         {/* Donation Amount */}
@@ -221,7 +222,6 @@ function DonationForm() {
                                 shape: "rect",
                                 height: 40,
                             }}
-                            fundingSource="paypal"
                             createOrder={(data, actions) => {
                                 return actions.order.create({
                                     purchase_units: [
@@ -239,13 +239,21 @@ function DonationForm() {
 
                                 if (order.status === "COMPLETED") {
                                     console.log("ITS HERE:", campaign);
-                                    const donorId = '2b6aa0f6-59cd-43d7-bfa5-5a7843dad1ff'; // Replace with actual donor_id from user state
-                                    const paymentMethod = "PayPal";
+                                    const donorId = '2b6aa0f6-59cd-43d7-bfa5-5a7843dad1ff'; //Hard-coded until User RBAC implemented properly
+                                    const paymentMethod = order.payer.payment_method === "paypal" ? "PayPal" : "Credit/Debit Card";
                                     const paymentStatus = "Completed";
                                     const campaign_id = campaign;
+                                    const receiptReference = order.id; 
                                    
 
-                                    insertDonation({ campaignId: campaign_id, donorId, amount: donationAmount, paymentMethod, paymentStatus });
+                                    insertDonation({ 
+                                        campaignId: campaign_id,
+                                        donorId,
+                                        amount: donationAmount,
+                                        paymentMethod,
+                                        paymentStatus,
+                                        receiptReference,
+                                     });
                                 } else {
                                     console.error("Order capture failed:", order);
                                     alert("Payment failed. Please try again.");

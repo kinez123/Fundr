@@ -16,6 +16,8 @@ function Navbar(){
                     
                 </ul>
                 <button><Link to="/profile">User Profile</Link></button>
+                <button><Link to="/campaign-analytics">Campaign Dashboard</Link></button>
+                <button><Link to="/login">Login</Link></button>
             </nav>
         </div>
     );
